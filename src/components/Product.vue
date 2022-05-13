@@ -1,11 +1,9 @@
 <template>
   <div class="col-6 col-md-4 col-lg-3 pb-4">
     <div class="card">
-        <RouterLink
-      :to="{ name: 'show-product', params: { id: product.id } }"
-    >
-      <img :src="product.image" class="card-img-top" />
-        </RouterLink>
+      <RouterLink :to="{ name: 'show-product', params: { id: product.id } }">
+        <img :src="product.image" class="card-img-top" />
+      </RouterLink>
       <div class="card-body">
         <div class="d-flex justify-content-between w-100 my-2">
           <span class="badge bg-primary">{{ product.category }}</span>
@@ -16,7 +14,12 @@
         <button v-if="inCart" type="button" class="btn btn-sm btn-success">
           In Cart
         </button>
-        <button @click="cartClick" v-else type="button" class="btn btn-sm btn-primary">
+        <button
+          @click="cartClick"
+          v-else
+          type="button"
+          class="btn btn-sm btn-primary"
+        >
           Add to Cart
         </button>
       </div>
@@ -48,8 +51,7 @@ export default defineComponent({
     ...mapActions(["addToCart"]),
     async cartClick() {
       let res = await this.addToCart(this.product);
-      console.log(res,'xx')
-      if(!!res){
+      if (!!res) {
         this.inCart = true;
       }
     },

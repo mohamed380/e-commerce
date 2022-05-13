@@ -18,8 +18,13 @@
           <li class="nav-item">
             <RouterLink to="/" class="nav-link">Home</RouterLink>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" v-if="authUser">
             <RouterLink to="/cart" class="nav-link">cart</RouterLink>
+          </li>
+          <li class="nav-item d-flex align-center" v-if="authUser">
+            <button @click="logoutHandler" class="btn btn-sm btn-secondary">
+              logout
+            </button>
           </li>
         </ul>
       </div>
@@ -28,9 +33,18 @@
 </template>
 
 <script lang='ts'>
+import { mapGetters, mapActions } from "vuex";
 import { defineComponent } from "vue";
 export default defineComponent({
   name: "Header",
+  computed: { ...mapGetters(["authUser"]) },
+  methods: {
+    ...mapActions(["logout", "getProducts"]),
+    logoutHandler() {
+      this.logout();
+      this.$router.go("/");
+    },
+  },
 });
 </script>
 

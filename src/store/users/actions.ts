@@ -35,7 +35,7 @@ export const userActions: ActionTree<IUserState, IRootState> = {
     },
 
     register({ commit, state }: ActionContext, registerData: { email: string, fullName: string, password: string }) {
-        
+
         commit('AUTH_LOADING')
         let authUser: user | boolean = userService.register(registerData.email, registerData.fullName, registerData.password);
 
@@ -51,7 +51,7 @@ export const userActions: ActionTree<IUserState, IRootState> = {
 
     logout({ commit, state }: ActionContext) {
 
-        commit('AUTH_LOADING')
+        commit('TOGGLE_LOADING')
 
         if (userService.logout()) {
             commit('AUTHENTICATED', null);
@@ -59,10 +59,10 @@ export const userActions: ActionTree<IUserState, IRootState> = {
             alert('not logged in');
         }
 
-        commit('AUTH_LOADING')
+        commit('TOGGLE_LOADING')
     },
 
-    addToCart({ commit, state, emit }: ActionContext, product: product): boolean {
+    addToCart({ commit, state }: ActionContext, product: product): boolean {
 
         if (!state.auth) {
             commit('AUTHENTICATE_USER');
@@ -72,5 +72,30 @@ export const userActions: ActionTree<IUserState, IRootState> = {
         state.auth.cart.addToCart(product);
         commit('UPDATE_USER', state.auth);
         return true
-    }
+    },
+
+    increaseAmount({ commit, state }: ActionContext, productID: number): void {
+        state.auth.cart.increaseProductAmount(productID);
+        commit('UPDATE_USER', state.auth);
+    },
+
+    decreaseAmount({ commit, state }: ActionContext, productID: number): void {
+        state.auth.cart.decreaseProductAmount(productID);
+        console.log(state.auth.cart.products)
+        commit('UPDATE_USER', state.auth);
+    },
+
+    removeItem({ commit, state }: ActionContext, productID: number): void {
+        state.auth.cart.removeItem(productID);
+        commit('UPDATE_USER', state.auth);
+    },
+
+    totalAmount({ commit, state }: ActionContext): number {
+        return state.auth.cart.totalAmount();
+    },
+
+    proceedToCheckout({ commit, state }: ActionContext): void {
+        state.auth.cart.clear();
+        commit('UPDATE_USER', state.auth);
+    },
 }

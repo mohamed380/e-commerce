@@ -66,6 +66,16 @@ export default class userService {
 
     public static updateAuth(user: user): void {
         this.writeLocalStorage(this.authUser, user);
+        let users = this.readLocalStroage(this.usersKey)
+        users.every((userObj: user, index: number) => {
+            if (user.email == userObj.email) {
+                users.splice(index, 1);
+                users.push(user);
+                return false
+            }
+            return true
+        })
+        this.writeLocalStorage(this.usersKey, users)
     }
 
     protected static readLocalStroage(key: string): any {

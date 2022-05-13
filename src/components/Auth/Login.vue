@@ -29,7 +29,13 @@
               v-model="credentials.password"
             />
             <ErrorMessage class="text-danger my-2" name="password" />
-            <button class="btn btn-sm btn-success w-25 my-2" type="submit" :disabled="isAuthLoading">Login</button>
+            <button
+              class="btn btn-sm btn-success w-25 my-2"
+              type="submit"
+              :disabled="isAuthLoading"
+            >
+              Login
+            </button>
           </Form>
         </div>
         <div class="modal-footer">
@@ -74,20 +80,21 @@ export default defineComponent({
   },
   computed: { ...mapGetters(["isAuthLoading"]) },
   methods: {
-    ...mapActions(["login"]),
+    ...mapActions(["login", 'getProducts']),
     submit() {
-      if(this.login(this.credentials)){
-          this.modalInstance.hide();
+      if (this.login(this.credentials)) {
+        this.modalInstance.hide();
+        this.$router.go("/");
       }
     },
     hide() {
       this.modalInstance.hide();
-      this.$store.commit('AUTHENTICATE_USER');
+      this.$store.commit("AUTHENTICATE_USER");
     },
-    showRegister(){
-      this.hide()
-      this.$emit('showRegister')
-    }
+    showRegister() {
+      this.hide();
+      this.$emit("showRegister");
+    },
   },
   mounted() {
     this.$nextTick(() => {

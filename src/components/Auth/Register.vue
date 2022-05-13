@@ -94,6 +94,7 @@ export default defineComponent({
     ...mapActions(["register"]),
     submit() {
       if (this.register(this.registerData)) {
+        this.$router.go("/");
         this.modalInstance.hide();
       }
     },

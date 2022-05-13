@@ -11,11 +11,13 @@ export const productActions: ActionTree<IProductState, IRootState> = {
     async getProducts({ commit, state }: ActionContext) {
         if (!state.products) {
             commit('TOGGLE_LOADING');
-            const { data } = await axios.get('https://fakestoreapi.com/products');
-            let products: product[] = product.castApiData(data);
-            console.log(products);
+            await axios.get('https://fakestoreapi.com/products').then((data)=>{
+                let products: product[] = product.castApiData(data.data);
+                commit('SET_PRODUCTS', products);
+            }).catch((res)=>{
+                alert('Network error')
+            });
             commit('TOGGLE_LOADING');
-            commit('SET_PRODUCTS', products);
         }
     }
 
