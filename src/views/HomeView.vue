@@ -6,7 +6,7 @@ import Authentication from "@/components/Auth/Authentication.vue";
 <template>
   <div
     class="row justify-content-between card-columns"
-    v-if="productList != null"
+    v-if="productList != n0ull"
   >
     <Product
       v-for="productObj in productList"

@@ -9,6 +9,7 @@ import Authentication from "@/components/Auth/Authentication.vue";
     v-if="activeProduct != null"
   >
     <Product :product="activeProduct" />
+    <Authentication v-if="showAuthForm" @forceRender="forceRender" />
   </div>
   <div v-else class="row justify-content-center">
     <div class="spinner-border" role="status">
@@ -23,8 +24,15 @@ import { mapActions, mapGetters, mapMutations } from "vuex";
 
 export default defineComponent({
   name: "ProductView",
-  computed: { ...mapGetters(["activeProduct"]) },
-  methods: { ...mapActions(["getProducts"]), ...mapMutations(["getProduct"]) },
+  computed: { ...mapGetters(["activeProduct", "showAuthForm"]) },
+  methods: {
+    ...mapActions(["getProducts"]),
+    ...mapMutations(["getProduct"]),
+    forceRender() {
+      this.getProduct(0);
+      this.$nextTick(() => this.getProduct(this.id));
+    },
+  },
   props: {
     id: {
       required: true,
