@@ -3,7 +3,7 @@ import Login from "@/components/Auth/Login.vue";
 import Register from "@/components/Auth/Register.vue";
 </script>
 <template>
-  <Login @showRegister="toggle" v-if="!register" />
+  <Login @showRegister="toggle" v-if="!register"/>
   <Register v-else  />
 </template>
 

@@ -13,7 +13,7 @@ import Authentication from "@/components/Auth/Authentication.vue";
       :key="productObj.id"
       :product="productObj"
     />
-    <Authentication v-if="showAuthForm" />
+    <Authentication v-if="showAuthForm" @forceRender="forceRender" />
   </div>
   <div v-else class="d-flex justify-content-center align-items-center">
     <div class="spinner-border" role="status">
@@ -24,12 +24,20 @@ import Authentication from "@/components/Auth/Authentication.vue";
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 
 export default defineComponent({
   name: "HomeView",
   computed: { ...mapGetters(["productList", "showAuthForm"]) },
-  methods: { ...mapActions(["getProducts"]) },
+  methods: {
+    ...mapActions(["getProducts"]),
+    ...mapMutations(["SET_PRODUCTS"]),
+    forceRender() {
+      let procuctListCopy = this.productList;
+      this.SET_PRODUCTS(null);
+      this.$nextTick(() => this.SET_PRODUCTS(procuctListCopy));
+    },
+  },
   async created() {
     await this.getProducts();
   },

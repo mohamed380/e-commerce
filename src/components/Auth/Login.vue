@@ -84,7 +84,8 @@ export default defineComponent({
     submit() {
       if (this.login(this.credentials)) {
         this.modalInstance.hide();
-        this.$router.go("/");
+        // this.$router.go("/");
+        this.$emit('forceRender')
       }
     },
     hide() {
