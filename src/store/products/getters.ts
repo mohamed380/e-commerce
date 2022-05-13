@@ -8,5 +8,5 @@ export const productGetters: GetterTree<IProductState, IRootState> & IProductGet
   },
   productList: (state: IProductState) => {
       return state.products
-  }
+  },
 }

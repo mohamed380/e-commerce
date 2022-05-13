@@ -1,6 +1,7 @@
 import type Icart from "@/interfaces/cart";
 import type Iuser from "@/interfaces/user";
 import cart from "./cart";
+import type { product } from "./product";
 
 export default class user{
 

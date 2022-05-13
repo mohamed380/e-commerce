@@ -1,7 +1,7 @@
 import type Icart from "@/interfaces/cart";
-import { product } from "./product";
+import type { product } from "./product";
 
-export default class cart{
+export default class Cart{
 
     private products: product[]|null
 
@@ -25,6 +25,7 @@ export default class cart{
     public addToCart(productObj:product):void{
         let cartElement = this.exists(productObj);
         if(cartElement){
+            //@ts-ignore
             this.products.every((element:product)=>{
                 if(element.id == cartElement.id){
                     element.cartAmount++;
