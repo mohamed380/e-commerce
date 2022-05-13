@@ -19,7 +19,7 @@ configure({
       try {
         defineRule(rule, rules[rule]);
       } catch (error) {
-        console.log(rule);          
+        console.error(rule);          
       }
   });
   

@@ -81,7 +81,6 @@ export const userActions: ActionTree<IUserState, IRootState> = {
 
     decreaseAmount({ commit, state }: ActionContext, productID: number): void {
         state.auth.cart.decreaseProductAmount(productID);
-        console.log(state.auth.cart.products)
         commit('UPDATE_USER', state.auth);
     },
 
